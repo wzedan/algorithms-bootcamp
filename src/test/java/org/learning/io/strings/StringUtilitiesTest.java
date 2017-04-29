@@ -30,4 +30,18 @@ public class StringUtilitiesTest {
         assertFalse(StringUtilities.isPermutation("abc", "dBA"));
 
     }
+
+    @Test
+    public void replaceSpace() {
+        String out = StringUtilities.replaceSpace("Mr Waleed Zedan      ", 14);
+        System.out.println(out);
+    }
+
+    @Test
+    public void isEditOne() {
+        assertTrue(StringUtilities.isOneWayEdited("pale", "ple"));
+        assertTrue(StringUtilities.isOneWayEdited("pales", "pale"));
+        assertTrue(StringUtilities.isOneWayEdited("pale", "bale"));
+        assertFalse(StringUtilities.isOneWayEdited("pale", "bake"));
+    }
 }

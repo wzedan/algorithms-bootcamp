@@ -1,5 +1,9 @@
 package org.learning.io.strings;
 
+import com.sun.tools.javac.util.ArrayUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 /**
@@ -34,5 +38,58 @@ public class StringUtilities {
         }
 
         return true;
+    }
+
+    public static String replaceSpace(String str, int actualLength) {
+        char[] characters = new char[str.length()];
+        characters = str.toCharArray();
+        ArrayList<Integer> positions = new ArrayList<Integer>();
+
+        //mark
+        for (int i = 0; i < actualLength; i++) {
+            if (str.charAt(i) == ' ') {
+                if (positions.isEmpty())
+                    positions.add(i);
+                else {
+                    positions.add(i + 2);
+                }
+            }
+        }
+
+        //sweep and swift the array
+        for (int i = 0; i < positions.size(); i++) {
+            char[] tmp = Arrays.copyOfRange(characters, positions.get(i) + 1, characters.length - 3);
+            characters = Arrays.copyOfRange(characters, 0, positions.get(i) + 3);
+            characters[positions.get(i)] = '%';
+            characters[positions.get(i) + 1] = '2';
+            characters[positions.get(i) + 2] = '0';
+            char[] result = new char[tmp.length + characters.length];
+            System.arraycopy(characters, 0, result, 0, characters.length);
+            System.arraycopy(tmp, 0, result, characters.length, tmp.length);
+            characters = Arrays.copyOf(result, result.length);
+        }
+        return new String(characters);
+    }
+
+    public static boolean isOneWayEdited(String str1, String str2) {
+        if (null != str1 && str1.equalsIgnoreCase(str2)) {
+            return true;
+        }
+
+        char[] str1Chars = str1.toCharArray();
+        char[] str2Chars = str2.toCharArray();
+
+        Arrays.sort(str1Chars);
+        Arrays.sort(str2Chars);
+
+        int counter = 0;
+        for (int i = 0; i < str1Chars.length; i++) {
+            int index = Arrays.binarySearch(str2Chars, str1Chars[i]);
+            if (index < 0) {
+                counter++;
+            }
+        }
+
+        return !(counter > 1);
     }
 }
