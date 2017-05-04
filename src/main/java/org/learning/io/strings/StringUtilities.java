@@ -1,7 +1,5 @@
 package org.learning.io.strings;
 
-import com.sun.tools.javac.util.ArrayUtils;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
